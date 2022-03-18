@@ -9,12 +9,12 @@ import (
 )
 
 const (
-	CYAN    = "\x1b[36m"
-	GREEN   = "\x1b[32m"
-	MAGENTA = "\x1b[35m"
-	RED     = "\x1b[31m"
-	RESET   = "\x1b[0m"
-	YELLOW  = "\x1b[33m"
+	cyan    = "\x1b[36m"
+	green   = "\x1b[32m"
+	magenta = "\x1b[35m"
+	red     = "\x1b[31m"
+	reset   = "\x1b[0m"
+	yellow  = "\x1b[33m"
 )
 
 func Info(input string) {
@@ -34,8 +34,8 @@ func Info(input string) {
 			offsetInHours,
 			fullPath[len(fullPath)-1],
 			lineNumber,
-			CYAN,
-			RESET,
+			cyan,
+			reset,
 			input)
 	} else {
 		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sINFO%s] %s\n",
@@ -46,8 +46,8 @@ func Info(input string) {
 			t.Minute(),
 			t.Second(),
 			offsetInHours,
-			CYAN,
-			RESET,
+			cyan,
+			reset,
 			input)
 	}
 }
@@ -69,8 +69,8 @@ func Success(input string) {
 			offsetInHours,
 			fullPath[len(fullPath)-1],
 			lineNumber,
-			GREEN,
-			RESET,
+			green,
+			reset,
 			input)
 	} else {
 		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sSUCCESS%s] %s\n",
@@ -81,8 +81,8 @@ func Success(input string) {
 			t.Minute(),
 			t.Second(),
 			offsetInHours,
-			GREEN,
-			RESET,
+			green,
+			reset,
 			input)
 	}
 }
@@ -104,8 +104,8 @@ func Debug(input string) {
 			offsetInHours,
 			fullPath[len(fullPath)-1],
 			lineNumber,
-			MAGENTA,
-			RESET,
+			magenta,
+			reset,
 			input)
 	} else {
 		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sDEBUG%s] %s\n",
@@ -116,8 +116,8 @@ func Debug(input string) {
 			t.Minute(),
 			t.Second(),
 			offsetInHours,
-			MAGENTA,
-			RESET,
+			magenta,
+			reset,
 			input)
 	}
 }
@@ -139,8 +139,8 @@ func Warning(input string) {
 			offsetInHours,
 			fullPath[len(fullPath)-1],
 			lineNumber,
-			YELLOW,
-			RESET,
+			yellow,
+			reset,
 			input)
 	} else {
 		fmt.Fprintf(os.Stderr, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sWARNING%s] %s\n",
@@ -151,8 +151,8 @@ func Warning(input string) {
 			t.Minute(),
 			t.Second(),
 			offsetInHours,
-			YELLOW,
-			RESET,
+			yellow,
+			reset,
 			input)
 	}
 }
@@ -174,8 +174,8 @@ func Error(input string) {
 			offsetInHours,
 			fullPath[len(fullPath)-1],
 			lineNumber,
-			RED,
-			RESET,
+			red,
+			reset,
 			input)
 	} else {
 		fmt.Fprintf(os.Stderr, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sERROR%s] %s\n",
@@ -186,8 +186,8 @@ func Error(input string) {
 			t.Minute(),
 			t.Second(),
 			offsetInHours,
-			RED,
-			RESET,
+			red,
+			reset,
 			input)
 	}
 }
