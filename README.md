@@ -36,3 +36,9 @@ Output:
 [2022.3.18|1:11:32|UTC-4] [loggo_test.go:9] [WARNING] hello world
 [2022.3.18|1:11:32|UTC-4] [loggo_test.go:10] [ERROR] hello world
 ```
+
+# Force refresh in pkg.go.dev
+
+```console
+$ curl proxy.golang.org/github.com/wizo06/loggo/@latest
+```
