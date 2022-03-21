@@ -17,14 +17,14 @@ const (
 	yellow  = "\x1b[33m"
 )
 
-func Info(input string) {
+func Info(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
 	offsetInHours := offsetInSeconds / 3600
 	_, file, lineNumber, ok := runtime.Caller(1)
 	if ok {
 		fullPath := strings.Split(file, "/")
-		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sINFO%s] %s\n",
+		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sINFO%s] %s\n",
 			t.Year(),
 			t.Month(),
 			t.Day(),
@@ -37,29 +37,20 @@ func Info(input string) {
 			cyan,
 			reset,
 			input)
+		fmt.Fprintf(os.Stdout, resultingString, a...)
 	} else {
-		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sINFO%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			cyan,
-			reset,
-			input)
+		fmt.Fprintf(os.Stdout, input, a...)
 	}
 }
 
-func Success(input string) {
+func Success(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
 	offsetInHours := offsetInSeconds / 3600
 	_, file, lineNumber, ok := runtime.Caller(1)
 	if ok {
 		fullPath := strings.Split(file, "/")
-		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sSUCCESS%s] %s\n",
+		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sSUCCESS%s] %s\n",
 			t.Year(),
 			t.Month(),
 			t.Day(),
@@ -72,29 +63,20 @@ func Success(input string) {
 			green,
 			reset,
 			input)
+		fmt.Fprintf(os.Stdout, resultingString, a...)
 	} else {
-		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sSUCCESS%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			green,
-			reset,
-			input)
+		fmt.Fprintf(os.Stdout, input, a...)
 	}
 }
 
-func Debug(input string) {
+func Debug(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
 	offsetInHours := offsetInSeconds / 3600
 	_, file, lineNumber, ok := runtime.Caller(1)
 	if ok {
 		fullPath := strings.Split(file, "/")
-		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sDEBUG%s] %s\n",
+		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sDEBUG%s] %s\n",
 			t.Year(),
 			t.Month(),
 			t.Day(),
@@ -107,29 +89,20 @@ func Debug(input string) {
 			magenta,
 			reset,
 			input)
+		fmt.Fprintf(os.Stdout, resultingString, a...)
 	} else {
-		fmt.Fprintf(os.Stdout, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sDEBUG%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			magenta,
-			reset,
-			input)
+		fmt.Fprintf(os.Stdout, input, a...)
 	}
 }
 
-func Warning(input string) {
+func Warning(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
 	offsetInHours := offsetInSeconds / 3600
 	_, file, lineNumber, ok := runtime.Caller(1)
 	if ok {
 		fullPath := strings.Split(file, "/")
-		fmt.Fprintf(os.Stderr, "[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sWARNING%s] %s\n",
+		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sWARNING%s] %s\n",
 			t.Year(),
 			t.Month(),
 			t.Day(),
@@ -142,29 +115,20 @@ func Warning(input string) {
 			yellow,
 			reset,
 			input)
+		fmt.Fprintf(os.Stderr, resultingString, a...)
 	} else {
-		fmt.Fprintf(os.Stderr, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sWARNING%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			yellow,
-			reset,
-			input)
+		fmt.Fprintf(os.Stderr, input, a...)
 	}
 }
 
-func Error(input string) {
+func Error(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
 	offsetInHours := offsetInSeconds / 3600
 	_, file, lineNumber, ok := runtime.Caller(1)
 	if ok {
 		fullPath := strings.Split(file, "/")
-		fmt.Fprintf(os.Stderr, "[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sERROR%s] %s\n",
+		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sERROR%s] %s\n",
 			t.Year(),
 			t.Month(),
 			t.Day(),
@@ -177,17 +141,8 @@ func Error(input string) {
 			red,
 			reset,
 			input)
+		fmt.Fprintf(os.Stderr, resultingString, a...)
 	} else {
-		fmt.Fprintf(os.Stderr, "[%d.%d.%d|%d:%d:%d|UTC%d] [%sERROR%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			red,
-			reset,
-			input)
+		fmt.Fprintf(os.Stderr, input, a...)
 	}
 }

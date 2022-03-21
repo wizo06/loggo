@@ -19,7 +19,7 @@ package loggo
 import "github.com/wizo06/loggo"
 
 func main() {
-	loggo.Info("hello world")
+	loggo.Info("hello world %s %s", "foo", "bar")
 	loggo.Success("hello world")
 	loggo.Debug("hello world")
 	loggo.Warning("hello world")
@@ -30,11 +30,11 @@ func main() {
 Output:
 
 ```console
-[2022.3.18|1:11:32|UTC-4] [loggo_test.go:6] [INFO] hello world
-[2022.3.18|1:11:32|UTC-4] [loggo_test.go:7] [SUCCESS] hello world
-[2022.3.18|1:11:32|UTC-4] [loggo_test.go:8] [DEBUG] hello world
-[2022.3.18|1:11:32|UTC-4] [loggo_test.go:9] [WARNING] hello world
-[2022.3.18|1:11:32|UTC-4] [loggo_test.go:10] [ERROR] hello world
+[2022.3.21|2:19:26|UTC-4] [loggo_test.go:6] [INFO] hello world foo bar
+[2022.3.21|2:19:26|UTC-4] [loggo_test.go:7] [SUCCESS] hello world
+[2022.3.21|2:19:26|UTC-4] [loggo_test.go:8] [DEBUG] hello world
+[2022.3.21|2:19:26|UTC-4] [loggo_test.go:9] [WARNING] hello world
+[2022.3.21|2:19:26|UTC-4] [loggo_test.go:10] [ERROR] hello world
 ```
 
 # Force refresh in pkg.go.dev
