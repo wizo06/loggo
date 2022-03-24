@@ -18,8 +18,13 @@ package loggo
 
 import "github.com/wizo06/loggo"
 
+type MyStruct struct {
+	ID   string
+	Name string
+}
+
 func main() {
-	loggo.Info("hello world %s %s", "foo", "bar")
+	loggo.Info("hello world %s %+v", "foo", &MyStruct{ID: "123", Name: "bar"})
 	loggo.Success("hello world")
 	loggo.Debug("hello world")
 	loggo.Warning("hello world")
@@ -30,15 +35,18 @@ func main() {
 Output:
 
 ```console
-[2022.3.21|2:19:26|UTC-4] [loggo_test.go:6] [INFO] hello world foo bar
-[2022.3.21|2:19:26|UTC-4] [loggo_test.go:7] [SUCCESS] hello world
-[2022.3.21|2:19:26|UTC-4] [loggo_test.go:8] [DEBUG] hello world
-[2022.3.21|2:19:26|UTC-4] [loggo_test.go:9] [WARNING] hello world
-[2022.3.21|2:19:26|UTC-4] [loggo_test.go:10] [ERROR] hello world
+[2022.3.24|18:26:4|UTC-4] [loggo_test.go:11] [INFO] hello world foo &{ID:123 Name:bar}
+[2022.3.24|18:26:4|UTC-4] [loggo_test.go:12] [SUCCESS] hello world
+[2022.3.24|18:26:4|UTC-4] [loggo_test.go:13] [DEBUG] hello world
+[2022.3.24|18:26:4|UTC-4] [loggo_test.go:14] [WARNING] hello world
+[2022.3.24|18:26:4|UTC-4] [loggo_test.go:15] [ERROR] hello world
 ```
 
 # Force refresh in pkg.go.dev
 
 ```console
+$ git tag v0.1.0
+$ git push origin v0.1.0
+$ GOPROXY=proxy.golang.org go list -m github.com/wizo06/loggo@v0.1.0
 $ curl proxy.golang.org/github.com/wizo06/loggo/@latest
 ```
