@@ -17,6 +17,7 @@ const (
 	yellow  = "\x1b[33m"
 )
 
+// Outputs to stdout with an [INFO] tag
 func Info(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
@@ -43,6 +44,7 @@ func Info(input string, a ...any) {
 	}
 }
 
+// Outputs to stdout with a [SUCCESS] tag
 func Success(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
@@ -69,6 +71,7 @@ func Success(input string, a ...any) {
 	}
 }
 
+// Outputs to stdout with a [DEBUG] tag
 func Debug(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
@@ -95,6 +98,7 @@ func Debug(input string, a ...any) {
 	}
 }
 
+// Outputs to stderr with a [WARNING] tag
 func Warning(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
@@ -121,6 +125,7 @@ func Warning(input string, a ...any) {
 	}
 }
 
+// Outputs to stderr with an [ERROR] tag
 func Error(input string, a ...any) {
 	t := time.Now()
 	_, offsetInSeconds := t.Zone()
