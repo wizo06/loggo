@@ -1,3 +1,3 @@
-module github.com/wizo06/loggo/v2
+module github.com/wizo06/loggo
 
 go 1.18
