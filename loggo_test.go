@@ -2,15 +2,28 @@ package loggo
 
 import "testing"
 
-type MyStruct struct {
-	ID   string
-	Name string
+type Foo struct {
+	Bar string
+	Baz int
 }
 
-func TestAll(t *testing.T) {
-	Info("hello world %s %+v", "foo", &MyStruct{ID: "123", Name: "bar"})
-	Success("hello world")
-	Debug("hello world")
-	Warning("hello world")
-	Error("hello world")
+func Test(t *testing.T) {
+	log := New(Config{
+		PrintHostname:               true,
+		PrintUNIXTimestamp:          true,
+		PrintHumanReadableTimestamp: true,
+		StackDepth:                  3,
+		PrintFileName:               true,
+		PrintFunctionName:           true,
+		PrintLineNumber:             true,
+		PrintLogLevel:               true,
+	})
+
+	log.Info("hello world")
+	log.Success("hello world")
+	log.Debug("hello world")
+	log.Warn("hello world")
+	log.Error("hello world")
+	log.Info("hello", "world", "and", "friends")
+	log.Info(Foo{})
 }

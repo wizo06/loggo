@@ -9,44 +9,91 @@ Inspired by [@wizo06/logger](https://www.npmjs.com/package/@wizo06/logger)
 $ go get github.com/wizo06/loggo
 ```
 
-# Quickstart
-
-Filename `loggo_test.go` with content:
+# Quick start
 
 ```go
-package loggo
+package main
 
 import "github.com/wizo06/loggo"
 
-type MyStruct struct {
-	ID   string
-	Name string
+type Foo struct {
+	Bar string
+	Baz int
 }
 
 func main() {
-	loggo.Info("hello world %s %+v", "foo", &MyStruct{ID: "123", Name: "bar"})
-	loggo.Success("hello world")
-	loggo.Debug("hello world")
-	loggo.Warning("hello world")
-	loggo.Error("hello world")
+	log := loggo.New(loggo.Config{
+		PrintHostname:               true,
+		PrintUNIXTimestamp:          true,
+		PrintHumanReadableTimestamp: true,
+		StackDepth:                  3,
+		PrintFileName:               true,
+		PrintFunctionName:           true,
+		PrintLineNumber:             true,
+		PrintLogLevel:               true,
+	})
+
+	log.Info("hello world")
+	log.Success("hello world")
+	log.Debug("hello world")
+	log.Warn("hello world")
+	log.Error("hello world")
+	log.Info("hello", "world", "and", "friends")
+	log.Info(Foo{})
 }
 ```
 
 Output:
 
 ```console
-[2022.3.24|18:26:4|UTC-4] [loggo_test.go:11] [INFO] hello world foo &{ID:123 Name:bar}
-[2022.3.24|18:26:4|UTC-4] [loggo_test.go:12] [SUCCESS] hello world
-[2022.3.24|18:26:4|UTC-4] [loggo_test.go:13] [DEBUG] hello world
-[2022.3.24|18:26:4|UTC-4] [loggo_test.go:14] [WARNING] hello world
-[2022.3.24|18:26:4|UTC-4] [loggo_test.go:15] [ERROR] hello world
+[hanabira] [1660118384|2022.8.10|3:59:44|UTC-4] [main.go:main:22] [info] [hello world]
+[hanabira] [1660118384|2022.8.10|3:59:44|UTC-4] [main.go:main:23] [success] [hello world]
+[hanabira] [1660118384|2022.8.10|3:59:44|UTC-4] [main.go:main:24] [debug] [hello world]
+[hanabira] [1660118384|2022.8.10|3:59:44|UTC-4] [main.go:main:25] [warn] [hello world]
+[hanabira] [1660118384|2022.8.10|3:59:44|UTC-4] [main.go:main:26] [error] [hello world]
+[hanabira] [1660118384|2022.8.10|3:59:44|UTC-4] [main.go:main:27] [info] [hello world and friends]
+[hanabira] [1660118384|2022.8.10|3:59:44|UTC-4] [main.go:main:28] [info] [{Bar: Baz:0}]
+```
+
+# Full Output Format
+
+```
+[<hostname>] [<unix timestamp>|<human readable timestamp>] [<file name>:<function_name>:<line number>] [<log level>]
+```
+
+# Available styling
+
+```go
+loggo.BLACK
+loggo.RED
+loggo.GREEN
+loggo.YELLOW
+loggo.BLUE
+loggo.MAGENTA
+loggo.CYAN
+loggo.WHITE
+
+loggo.RESET
+loggo.BRIGHT
+loggo.DIM
+loggo.UNDERSCORE
+loggo.BLINK
+loggo.REVERSE
+loggo.HIDDEN
+```
+
+## Example
+
+```go
+log.Info("Downloading", UNDERSCORE, "movie.mp4", RESET)
 ```
 
 # Force refresh in pkg.go.dev
 
 ```console
-$ git tag v0.1.0
-$ git push origin v0.1.0
-$ GOPROXY=proxy.golang.org go list -m github.com/wizo06/loggo@v0.1.0
+$ TAG="v1.0.0"
+$ git tag $TAG
+$ git push origin $TAG
+$ GOPROXY=proxy.golang.org go list -m github.com/wizo06/loggo@$TAG
 $ curl proxy.golang.org/github.com/wizo06/loggo/@latest
 ```

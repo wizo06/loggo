@@ -3,146 +3,114 @@ package loggo
 import (
 	"fmt"
 	"os"
-	"runtime"
-	"strings"
-	"time"
 )
 
-const (
-	cyan    = "\x1b[36m"
-	green   = "\x1b[32m"
-	magenta = "\x1b[35m"
-	red     = "\x1b[31m"
-	reset   = "\x1b[0m"
-	yellow  = "\x1b[33m"
-)
+type Log struct {
+	PrintHostname               bool
+	PrintUNIXTimestamp          bool
+	PrintHumanReadableTimestamp bool
+	StackDepth                  int
+	PrintFileName               bool
+	PrintFunctionName           bool
+	PrintLineNumber             bool
+	PrintLogLevel               bool
+}
 
-func Info(input string, a ...any) {
-	t := time.Now()
-	_, offsetInSeconds := t.Zone()
-	offsetInHours := offsetInSeconds / 3600
-	_, file, lineNumber, ok := runtime.Caller(1)
-	if ok {
-		fullPath := strings.Split(file, "/")
-		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sINFO%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			fullPath[len(fullPath)-1],
-			lineNumber,
-			cyan,
-			reset,
-			input)
-		fmt.Fprintf(os.Stdout, resultingString, a...)
-	} else {
-		fmt.Fprintf(os.Stdout, input, a...)
+type Config struct {
+	PrintHostname               bool
+	PrintUNIXTimestamp          bool
+	PrintHumanReadableTimestamp bool
+	StackDepth                  int
+	PrintFileName               bool
+	PrintFunctionName           bool
+	PrintLineNumber             bool
+	PrintLogLevel               bool
+}
+
+func New(c Config) *Log {
+	return &Log{
+		PrintHostname:               c.PrintHostname,
+		PrintUNIXTimestamp:          c.PrintUNIXTimestamp,
+		PrintHumanReadableTimestamp: c.PrintHumanReadableTimestamp,
+		StackDepth:                  c.StackDepth,
+		PrintFileName:               c.PrintFileName,
+		PrintFunctionName:           c.PrintFunctionName,
+		PrintLineNumber:             c.PrintLineNumber,
+		PrintLogLevel:               c.PrintLogLevel,
 	}
 }
 
-func Success(input string, a ...any) {
-	t := time.Now()
-	_, offsetInSeconds := t.Zone()
-	offsetInHours := offsetInSeconds / 3600
-	_, file, lineNumber, ok := runtime.Caller(1)
-	if ok {
-		fullPath := strings.Split(file, "/")
-		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sSUCCESS%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			fullPath[len(fullPath)-1],
-			lineNumber,
-			green,
-			reset,
-			input)
-		fmt.Fprintf(os.Stdout, resultingString, a...)
-	} else {
-		fmt.Fprintf(os.Stdout, input, a...)
-	}
+func (log *Log) Info(a ...any) {
+	s := createPrintString(
+		log.PrintHostname,
+		log.PrintUNIXTimestamp,
+		log.PrintHumanReadableTimestamp,
+		log.StackDepth,
+		log.PrintFileName,
+		log.PrintFunctionName,
+		log.PrintLineNumber,
+		log.PrintLogLevel,
+		loglevel_info,
+	)
+	fmt.Fprintln(os.Stdout, s, fmt.Sprintf("%+v", a))
 }
 
-func Debug(input string, a ...any) {
-	t := time.Now()
-	_, offsetInSeconds := t.Zone()
-	offsetInHours := offsetInSeconds / 3600
-	_, file, lineNumber, ok := runtime.Caller(1)
-	if ok {
-		fullPath := strings.Split(file, "/")
-		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sDEBUG%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			fullPath[len(fullPath)-1],
-			lineNumber,
-			magenta,
-			reset,
-			input)
-		fmt.Fprintf(os.Stdout, resultingString, a...)
-	} else {
-		fmt.Fprintf(os.Stdout, input, a...)
-	}
+func (log *Log) Success(a ...any) {
+	s := createPrintString(
+		log.PrintHostname,
+		log.PrintUNIXTimestamp,
+		log.PrintHumanReadableTimestamp,
+		log.StackDepth,
+		log.PrintFileName,
+		log.PrintFunctionName,
+		log.PrintLineNumber,
+		log.PrintLogLevel,
+		loglevel_success,
+	)
+	fmt.Fprintln(os.Stdout, s, fmt.Sprintf("%+v", a))
 }
 
-func Warning(input string, a ...any) {
-	t := time.Now()
-	_, offsetInSeconds := t.Zone()
-	offsetInHours := offsetInSeconds / 3600
-	_, file, lineNumber, ok := runtime.Caller(1)
-	if ok {
-		fullPath := strings.Split(file, "/")
-		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sWARNING%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			fullPath[len(fullPath)-1],
-			lineNumber,
-			yellow,
-			reset,
-			input)
-		fmt.Fprintf(os.Stderr, resultingString, a...)
-	} else {
-		fmt.Fprintf(os.Stderr, input, a...)
-	}
+func (log *Log) Debug(a ...any) {
+	s := createPrintString(
+		log.PrintHostname,
+		log.PrintUNIXTimestamp,
+		log.PrintHumanReadableTimestamp,
+		log.StackDepth,
+		log.PrintFileName,
+		log.PrintFunctionName,
+		log.PrintLineNumber,
+		log.PrintLogLevel,
+		loglevel_debug,
+	)
+	fmt.Fprintln(os.Stdout, s, fmt.Sprintf("%+v", a))
 }
 
-func Error(input string, a ...any) {
-	t := time.Now()
-	_, offsetInSeconds := t.Zone()
-	offsetInHours := offsetInSeconds / 3600
-	_, file, lineNumber, ok := runtime.Caller(1)
-	if ok {
-		fullPath := strings.Split(file, "/")
-		resultingString := fmt.Sprintf("[%d.%d.%d|%d:%d:%d|UTC%d] [%s:%d] [%sERROR%s] %s\n",
-			t.Year(),
-			t.Month(),
-			t.Day(),
-			t.Hour(),
-			t.Minute(),
-			t.Second(),
-			offsetInHours,
-			fullPath[len(fullPath)-1],
-			lineNumber,
-			red,
-			reset,
-			input)
-		fmt.Fprintf(os.Stderr, resultingString, a...)
-	} else {
-		fmt.Fprintf(os.Stderr, input, a...)
-	}
+func (log *Log) Warn(a ...any) {
+	s := createPrintString(
+		log.PrintHostname,
+		log.PrintUNIXTimestamp,
+		log.PrintHumanReadableTimestamp,
+		log.StackDepth,
+		log.PrintFileName,
+		log.PrintFunctionName,
+		log.PrintLineNumber,
+		log.PrintLogLevel,
+		loglevel_warn,
+	)
+	fmt.Fprintln(os.Stderr, s, fmt.Sprintf("%+v", a))
+}
+
+func (log *Log) Error(a ...any) {
+	s := createPrintString(
+		log.PrintHostname,
+		log.PrintUNIXTimestamp,
+		log.PrintHumanReadableTimestamp,
+		log.StackDepth,
+		log.PrintFileName,
+		log.PrintFunctionName,
+		log.PrintLineNumber,
+		log.PrintLogLevel,
+		loglevel_error,
+	)
+	fmt.Fprintln(os.Stderr, s, fmt.Sprintf("%+v", a))
 }
