@@ -91,7 +91,7 @@ log.Info("Downloading", UNDERSCORE, "movie.mp4", RESET)
 # Force refresh in pkg.go.dev
 
 ```console
-$ TAG="v1.0.0"
+$ TAG="v1.0.0" # change this
 $ git tag $TAG
 $ git push origin $TAG
 $ GOPROXY=proxy.golang.org go list -m github.com/wizo06/loggo@$TAG
